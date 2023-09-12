@@ -11,10 +11,8 @@ interface List {
 
 export default class FullList implements List {
 
-  // Singleton???
   static instance: FullList = new FullList()
 
-  //for Singleton
   private constructor(private _list: ListItem[] = []) { }
 
   get list(): ListItem[] {
@@ -28,15 +26,11 @@ export default class FullList implements List {
   load(): void {
     const storedList: string | null = localStorage.getItem('myList')
 
-    // if (storedList !== null)
-    //   this._list = JSON.parse(storedList)
-
     if (typeof storedList !== 'string') return
 
     const parsedList: { _id: string, _item: string, _checked: boolean }[] =
       JSON.parse(storedList)
 
-    // Singleton???
     parsedList.forEach(itemObj => {
       const newListItem = new ListItem(itemObj._id, itemObj._item, itemObj._checked)
       FullList.instance.addItem(newListItem)
